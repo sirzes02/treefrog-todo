@@ -1,0 +1,23 @@
+#include "objects/blog.h"
+
+@head_title ~= controller()->name() + ": " + controller()->activeAction()
+
+@for :
+tfetch(QList<Blog>, blogList);
+for (const auto &i : blogList) {
+    %%
+}
+
+@id ~= i.id()
+
+@title ~= i.title()
+
+@body ~= i.body()
+
+@link_to_entry :== linkTo("Create a new Blog", urla("create"))
+
+@link_to_show :== linkTo("Show", urla("show", i.id()))
+
+@link_to_edit :== linkTo("Edit", urla("save", i.id()))
+
+@link_to_remove :== linkTo("Remove", urla("remove", i.id()), Tf::Post, "confirm('Are you sure?')")

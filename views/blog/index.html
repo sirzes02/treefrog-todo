@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title data-tf="@head_title"></title>
+</head>
+<body>
+
+<h1>Listing Blog</h1>
+
+<a href="#" data-tf="@link_to_entry">Create a new Blog</a><br />
+<br />
+<table border="1" cellpadding="5" style="border: 1px #d0d0d0 solid; border-collapse: collapse;">
+  <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Body</th>
+    <th></th>
+  </tr>
+  <tr data-tf="@for">
+    <td data-tf="@id"></td>
+    <td data-tf="@title"></td>
+    <td data-tf="@body"></td>
+    <td>
+      <a href="#" data-tf="@link_to_show">Show</a>
+      <a href="#" data-tf="@link_to_edit">Edit</a>
+      <a href="#" data-tf="@link_to_remove">Remove</a>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

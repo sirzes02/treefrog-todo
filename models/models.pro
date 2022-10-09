@@ -12,3 +12,8 @@ MOC_DIR = .obj/
 OBJECTS_DIR = .obj/
 
 include(../appbase.pri)
+HEADERS += sqlobjects/blogobject.h
+HEADERS += objects/blog.h
+SOURCES += objects/blog.cpp
+HEADERS += blogservice.h
+SOURCES += blogservice.cpp
