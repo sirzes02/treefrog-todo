@@ -5,25 +5,25 @@
 
 void BlogService::index()
 {
-    auto blogList = Blog::getAll();
-    texport(blogList);
+    auto items = Blog::getAllJson();
+    texport(items);
 }
 
 void BlogService::show(int id)
 {
-    auto blog = Blog::get(id);
-    texport(blog);
+    auto item = Blog::get(id).toJsonObject();
+    texport(item);
 }
 
 int BlogService::create(THttpRequest &request)
 {
-    auto blog = request.formItems("blog");
-    auto model = Blog::create(blog);
+    auto item = request.formItems("blog");
+    auto model = Blog::create(item);
 
     if (model.isNull()) {
         QString error = "Failed to create.";
         texport(error);
-        texport(blog);
+        texport(item);
         return -1;
     }
 
@@ -37,8 +37,8 @@ void BlogService::edit(TSession& session, int id)
     auto model = Blog::get(id);
     if (!model.isNull()) {
         session.insert("blog_lockRevision", model.lockRevision());
-        auto blog = model.toVariantMap();
-        texport(blog);
+        auto item = model.toJsonObject();
+        texport(item);
     }
 }
 
@@ -53,10 +53,10 @@ int BlogService::save(THttpRequest &request, TSession &session, int id)
         return 0;
     }
 
-    auto blog = request.formItems("blog");
-    model.setProperties(blog);
+    auto item = request.formItems("blog");
+    model.setProperties(item);
     if (!model.save()) {
-        texport(blog);
+        texport(item);
         QString error = "Failed to update.";
         texport(error);
         return -1;

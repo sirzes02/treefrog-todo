@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Blog: create</title>
+  <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<!-- vue template -->
+<script type="text/x-template" id="blog-create-template">
+  <h1>New Blog</h1>
+  <p style="color: red">{{ error }}</p>
+  <p style="color: green">{{ notice }}</p>
+  <form action="/blog/create" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="authenticity_token" :value="authenticity_token" />
+    <p>
+      <label>Title<br><input type="text" name="blog[title]" :value="item.title" /></label>
+    </p>
+    <p>
+      <label>Body<br><input type="text" name="blog[body]" :value="item.body" /></label>
+    </p>
+    <p>
+      <input type="submit" value="Create" />
+    </p>
+  </form>
+  <a href="/blog/index">Back</a>
+</script>
+
+<!-- vue app main -->
+<script>
+Vue.createApp({
+  setup() {
+    return {
+      item: <%==$ item %|% "{}" %>,
+      error: '<%=$ error %>',
+      notice: '<%=$ notice %>',
+      authenticity_token: '<%= authenticityToken() %>',
+    };
+  },
+  template: "#blog-create-template",
+}).mount("#app");
+</script>
+</body>
+</html>

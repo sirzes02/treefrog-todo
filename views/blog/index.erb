@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Blog: index</title>
+  <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<!-- vue template -->
+<script type="text/x-template" id="blog-index-template">
+  <h1>Listing Blog</h1>
+  <p><a href="/blog/create">Create a new Blog</a></p>
+  <table border="1" cellpadding="5" style="border: 1px #d0d0d0 solid; border-collapse: collapse;">
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Body</th>
+    </tr>
+    <tr v-for="item in items">
+      <td>{{ item.id }}</td>
+      <td>{{ item.title }}</td>
+      <td>{{ item.body }}</td>
+      <td>
+        <a :href="`/blog/show/${item.id}`">Show</a> <a :href="`/blog/save/${item.id}`">Edit</a> <a href="#" @click.prevent="postRemove(`/blog/remove/${item.id}`)">Remove</a>
+      </td>
+    </tr>
+  </table>
+</script>
+
+<!-- vue app main -->
+<script>
+Vue.createApp({
+  setup() {
+    return {
+      items: <%==$ items %|% "{}" %>
+    };
+  },
+  template: "#blog-index-template",
+  methods: {
+    postRemove: function(url) {
+      if (confirm('Are you sure?')) {
+        var f = document.createElement('form');
+        document.body.appendChild(f);
+        f.method = 'post';
+        f.action = url;
+        var i = document.createElement('input');
+        f.appendChild(i);
+        i.type = 'hidden';
+        i.name = 'authenticity_token';
+        i.value = '<%= authenticityToken() %>';
+        f.submit();
+      }
+    }
+  }
+}).mount("#app");
+</script>
+</body>
+</html>

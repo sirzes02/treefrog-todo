@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Blog: show</title>
+  <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<!-- vue template -->
+<script type="text/x-template" id="blog-show-template">
+  <h1>Showing Blog</h1>
+  <p style="color: red">{{ error }}</p>
+  <p style="color: green">{{ notice }}</p>
+  <dt>ID</dt><dd>{{ item.id }}</dd><br>
+  <dt>Title</dt><dd>{{ item.title }}</dd><br>
+  <dt>Body</dt><dd>{{ item.body }}</dd><br>
+  <dt>Created at</dt><dd>{{ item.createdAt }}</dd><br>
+  <dt>Updated at</dt><dd>{{ item.updatedAt }}</dd><br>
+  <dt>Lock Revision</dt><dd>{{ item.lockRevision }}</dd><br>
+  <a :href="`/blog/save/${item.id}`">Edit</a> |
+  <a href="/blog/index">Back</a>
+</script>
+
+<!-- vue app main -->
+<script>
+Vue.createApp({
+  setup() {
+    return {
+      item: <%==$ item %|% "{}" %>,
+      error: '<%=$ error %>',
+      notice: '<%=$ notice %>',
+    };
+  },
+  template: "#blog-show-template",
+}).mount("#app");
+</script>
+</body>
+</html>

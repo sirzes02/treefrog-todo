@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Blog: save</title>
+  <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<!-- vue template -->
+<script type="text/x-template" id="blog-save-template">
+  <h1>Editing Blog</h1>
+  <p style="color: red"><%=$ error %></p>
+  <p style="color: green"><%=$ notice %></p>
+  <form :action="`/blog/save/${item.id}`" method="post">
+    <input type="hidden" name="authenticity_token" :value="authenticity_token" />
+    <p>
+      <label>ID<br><input type="text" name="blog[id]" :value="item.id" readonly="readonly" /></label>
+    </p>
+    <p>
+      <label>Title<br><input type="text" name="blog[title]" :value="item.title" /></label>
+    </p>
+    <p>
+      <label>Body<br><input type="text" name="blog[body]" :value="item.body" /></label>
+    </p>
+    <p>
+      <input type="submit" value="Save" />
+    </p>
+  </form>
+  <a :href="`/blog/show/${item.id}`">Show</a> |
+  <a href="/blog/index">Back</a>
+</script>
+
+<!-- vue app main -->
+<script>
+Vue.createApp({
+  setup() {
+    return {
+      item: <%==$ item %|% "{}" %>,
+      error: '<%=$ error %>',
+      notice: '<%=$ notice %>',
+      authenticity_token: '<%= authenticityToken() %>',
+    };
+  },
+  template: "#blog-save-template",
+}).mount("#app");
+</script>
+</body>
+</html>
